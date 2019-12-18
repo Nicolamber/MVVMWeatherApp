@@ -14,3 +14,6 @@ Course agenda:
   - Room databases
   - Shared preferences
   - Dependency injector with Kodein
+
+Screenshots:
+ - Comming soon :)
