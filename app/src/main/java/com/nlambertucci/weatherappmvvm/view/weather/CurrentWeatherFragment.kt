@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 
 import com.nlambertucci.weatherappmvvm.R
-import com.nlambertucci.weatherappmvvm.model.ApiWeatherService
+import com.nlambertucci.weatherappmvvm.network.ApiWeatherService
+import com.nlambertucci.weatherappmvvm.network.ConnectivityInterceptorImpl
+import com.nlambertucci.weatherappmvvm.network.WeatherNetworkDataSourceImpl
 import com.nlambertucci.weatherappmvvm.viewmodel.CurrentWeatherViewModel
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -35,10 +38,15 @@ class CurrentWeatherFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
         // TODO: Use the ViewModel
 
-        val apiService = ApiWeatherService()
+        val apiService = ApiWeatherService(ConnectivityInterceptorImpl(this.context!!))
+        val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
+        weatherNetworkDataSource.downloadCurrentWeather.observe(this, Observer {
+            textViewtt.text = it.currentWeatherEntry.toString()
+        })
         GlobalScope.launch(Dispatchers.Main){
-            val currentWeatherResponse = apiService.getCurrentWeather("London").await()
-            textViewtt.text = currentWeatherResponse.currentWeatherEntry.toString()
+            weatherNetworkDataSource.fetchCurrentWeather("London", "en")
+            //val currentWeatherResponse = apiService.getCurrentWeather("London").await()
+            //textViewtt.text = currentWeatherResponse.currentWeatherEntry.toString()
         }
     }
 

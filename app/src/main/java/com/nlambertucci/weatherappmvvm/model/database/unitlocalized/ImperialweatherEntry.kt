@@ -5,10 +5,6 @@ import androidx.room.ColumnInfo
 data class ImperialweatherEntry(
     @ColumnInfo(name = "temperature")
     override val temperature: Int,
-    @ColumnInfo(name = "weatherDescriptions")
-    override val conditionText: String,
-    @ColumnInfo(name = "weatherIcons")
-    override val conditionUrl: String,
     @ColumnInfo(name = "windSpeed")
     override val windSpeed: Int,
     @ColumnInfo(name = "windDir")
