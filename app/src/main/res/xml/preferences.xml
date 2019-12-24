@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Ubicación">
+            <SwitchPreference
+                android:key="USE_DEVICE_LOCATION"
+                android:title="Usar la ubicación del dispositivo"
+                android:summary="Permitir a la aplicación usar tu ubicación"
+                android:defaultValue="true"
+                android:disableDependentsState="true"/>
+        <EditTextPreference
+            android:key="CUSTOM_LOCATION"
+            android:title="Ubicación"
+            android:summary="Ubicación de dónde deseas obtener el clima"
+            android:defaultValue="Mendoza"
+            android:dependency="USE_DEVICE_LOCATION"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Unidades">
+        <ListPreference
+            android:key="UNIT_SYSTEM"
+            android:title="Unidadesd de medida"
+            android:summary="%s"
+            android:defaultValue="METRIC"
+            android:entries="@array/unitSystemEntries"
+            android:entryValues="@array/unitSystemValues"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -25,12 +25,20 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
+const val METRIC ="Metric"
+const val IMPERIAL ="Imperial"
+const val MPH = 0.621371
+const val MILLES = 1.6
+const val INCH = 0.0393701
 class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private val viewModelFactory: CurrentWeatherViewModelFactory by instance()
-
-
+    private var temperatureF: Double = 0.0
+    private var feelsLikeF: Double = 0.0
+    private var visibilityF: Double = 0.0
+    private var precipitationF:Double = 0.0
+    private var windSpeedF: Double = 0.0
     private lateinit var viewModel: CurrentWeatherViewModel
 
     override fun onCreateView(
@@ -48,17 +56,6 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             .get(CurrentWeatherViewModel::class.java)
 
         bindUI()
-
-//        val apiService = ApiWeatherService(ConnectivityInterceptorImpl(this.context!!))
-//        val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
-//        weatherNetworkDataSource.downloadCurrentWeather.observe(this, Observer {
-//            textViewtt.text = it.currentWeatherEntry.toString()
-//        })
-//        GlobalScope.launch(Dispatchers.Main){
-//            weatherNetworkDataSource.fetchCurrentWeather("London", "en")
-//            //val currentWeatherResponse = apiService.getCurrentWeather("London").await()
-//            //textViewtt.text = currentWeatherResponse.currentWeatherEntry.toString()
-//        }
     }
 
     private fun bindUI() = launch{
@@ -93,8 +90,16 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun updateTemperatures(temperature: Int, feelsLike:Int){
         val unitAbreviation = chooseLocalizedUnitAbbreviation("ºC", "ºF")
-        textView_temperature.text = "$temperature$unitAbreviation"
-        textView_feels_like_temperature.text = "Sensación térmica$feelsLike$unitAbreviation"
+
+        if(getMetric().equals(IMPERIAL)){
+            temperatureF = (temperature * 1.8)+ 32
+            feelsLikeF = (feelsLike * 1.8)+32
+            textView_temperature.text = "$temperatureF $unitAbreviation"
+            textView_feels_like_temperature.text = "Sensación térmica: $feelsLikeF $unitAbreviation"
+        }else{
+            textView_temperature.text = "$temperature$unitAbreviation"
+            textView_feels_like_temperature.text = "Sensación térmica$feelsLike$unitAbreviation"
+        }
 
         if( temperature > 25){
             updateImage("https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/8-512.png")
@@ -103,19 +108,35 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         }
     }
 
-    private fun updatePrecipitation(precipitationVolume: Int){
+    private fun updatePrecipitation(precipitationVolume: Int) {
         val unitAbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
-        textView_precipitation.text = "Precipitaciones: $precipitationVolume $unitAbreviation"
+        if (getMetric().equals(IMPERIAL)) {
+            precipitationF = precipitationVolume * INCH
+            textView_precipitation.text = "Precipitaciones: $precipitationF $unitAbreviation"
+        } else {
+            textView_precipitation.text = "Precipitaciones: $precipitationVolume $unitAbreviation"
+        }
     }
 
     private fun updateWind(windDirection: String, windSpeed: Int){
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("Km/h","mph")
-        textView_wind.text = "Viento: $windDirection, $windSpeed $unitAbbreviation"
+        if(getMetric().equals(IMPERIAL)){
+            windSpeedF = MPH * windSpeed
+            textView_wind.text = "Viento: $windDirection, $windSpeedF $unitAbbreviation"
+        }else{
+            textView_wind.text = "Viento: $windDirection, $windSpeed $unitAbbreviation"
+        }
+
     }
 
-    private fun updateVisibility(visibility: Int){
-        val unitAbbreviation = chooseLocalizedUnitAbbreviation("km","mi")
-        textView_visibility.text = "Visibilidad: $visibility $unitAbbreviation"
+    private fun updateVisibility(visibility: Int) {
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi")
+        if (getMetric().equals(IMPERIAL)) {
+            visibilityF = visibility * MILLES
+            textView_visibility.text = "Visibilidad: $visibilityF $unitAbbreviation"
+        } else {
+            textView_visibility.text = "Visibilidad: $visibility $unitAbbreviation"
+        }
     }
 
     private fun updateImage(url: String){
@@ -132,5 +153,9 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             else -> "La temperatura es muy baja, mejor quedate en tu casa"
         }
         textView_condition.text = advice
+    }
+
+    private fun getMetric(): String{
+        return if(chooseLocalizedUnitAbbreviation("Km/h","mph").equals("mph")) IMPERIAL else METRIC
     }
 }

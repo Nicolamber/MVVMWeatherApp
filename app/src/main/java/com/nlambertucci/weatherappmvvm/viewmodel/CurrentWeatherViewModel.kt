@@ -1,18 +1,21 @@
 package com.nlambertucci.weatherappmvvm.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.nlambertucci.weatherappmvvm.provider.UnitProvider
 import com.nlambertucci.weatherappmvvm.repository.ForecastRepository
 import com.nlambertucci.weatherappmvvm.utils.UnitSystem
 import com.nlambertucci.weatherappmvvm.utils.lazyDeferred
 
 class CurrentWeatherViewModel (
-    private val forecastRepository: ForecastRepository
+    private val forecastRepository: ForecastRepository,
+    private val unitProvider: UnitProvider
 ) : ViewModel() {
 
-    private val unitSystem = UnitSystem.METRIC //get from settings in a future
+    private val unitSystem = unitProvider.getUnitSystem()
 
-    val isMetric: Boolean
+    val isMetric:Boolean
         get() = unitSystem == UnitSystem.METRIC
+
 
     val weather by lazyDeferred {
         forecastRepository.getCurrentWeather(isMetric)
