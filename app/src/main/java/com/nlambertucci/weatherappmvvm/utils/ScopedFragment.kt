@@ -1,4 +1,4 @@
-package com.nlambertucci.weatherappmvvm.view.weather
+package com.nlambertucci.weatherappmvvm.utils
 
 import android.content.res.Configuration
 import android.os.Bundle

@@ -2,7 +2,6 @@ package com.nlambertucci.weatherappmvvm.view.weather
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,20 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 
 import com.nlambertucci.weatherappmvvm.R
-import com.nlambertucci.weatherappmvvm.network.ApiWeatherService
-import com.nlambertucci.weatherappmvvm.network.ConnectivityInterceptorImpl
-import com.nlambertucci.weatherappmvvm.network.WeatherNetworkDataSourceImpl
 import com.nlambertucci.weatherappmvvm.utils.GlideApp
+import com.nlambertucci.weatherappmvvm.utils.ScopedFragment
 import com.nlambertucci.weatherappmvvm.viewmodel.CurrentWeatherViewModel
 import com.nlambertucci.weatherappmvvm.viewmodel.CurrentWeatherViewModelFactory
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 const val METRIC ="Metric"
 const val IMPERIAL ="Imperial"
@@ -59,11 +55,20 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch{
+
         val currentWeather = viewModel.weather.await()
+        val weatherLocation = viewModel.weatherLocation.await()
+
+        weatherLocation.observe(this@CurrentWeatherFragment,Observer{location ->
+            if(location == null) return@Observer
+            updateLocation(location.name)
+
+        })
+
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
             if(it == null) return@Observer
             group_loading.visibility = View.GONE
-            updateLocation("Mendoza")
+            //updateLocation("Mendoza")
             updateDateToToday()
             updateTemperatures(it.temperature,it.feelsLikeTemperature)
            // updateCondition(it.)
@@ -93,8 +98,9 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
         if(getMetric().equals(IMPERIAL)){
             temperatureF = (temperature * 1.8)+ 32
+            val bigDecimal = BigDecimal(temperatureF).setScale(2,RoundingMode.HALF_EVEN)
             feelsLikeF = (feelsLike * 1.8)+32
-            textView_temperature.text = "$temperatureF $unitAbreviation"
+            textView_temperature.text = "$bigDecimal $unitAbreviation"
             textView_feels_like_temperature.text = "Sensación térmica: $feelsLikeF $unitAbreviation"
         }else{
             textView_temperature.text = "$temperature$unitAbreviation"

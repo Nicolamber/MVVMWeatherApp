@@ -1,4 +1,4 @@
-package com.nlambertucci.weatherappmvvm.provider
+package com.nlambertucci.weatherappmvvm.utils.provider
 
 import com.nlambertucci.weatherappmvvm.utils.UnitSystem
 

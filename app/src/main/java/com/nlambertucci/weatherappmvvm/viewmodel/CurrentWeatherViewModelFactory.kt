@@ -2,7 +2,7 @@ package com.nlambertucci.weatherappmvvm.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.nlambertucci.weatherappmvvm.provider.UnitProvider
+import com.nlambertucci.weatherappmvvm.utils.provider.UnitProvider
 import com.nlambertucci.weatherappmvvm.repository.ForecastRepository
 
 
