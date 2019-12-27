@@ -38,11 +38,16 @@ Course agenda:
 
 Screenshots:
  
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/coldSS.png) 
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/niceSS.png)
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/hotSS.png)
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/farenheitSS.png)
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/settingsSS.png)
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/placeSS.png)
- ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/unitSystemSS.png)
+ ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/Screen%20Shot%202019-12-27%20at%2009.58.13.png) 
+ 
+ ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/Screen%20Shot%202019-12-27%20at%2009.58.35.png)
+ 
+ ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/Screen%20Shot%202019-12-27%20at%2009.58.51.png)
+ 
+ ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/Screen%20Shot%202019-12-27%20at%2009.59.02.png)
+ 
+ ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/Screen%20Shot%202019-12-27%20at%2009.59.15.png)
+ 
+ ![alt text](https://github.com/Nicolamber/MVVMWeatherApp/blob/master/Screenshots/Screen%20Shot%202019-12-27%20at%2009.59.25.png)
+
  
