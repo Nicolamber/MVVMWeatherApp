@@ -107,10 +107,15 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             textView_feels_like_temperature.text = "Sensación térmica$feelsLike$unitAbreviation"
         }
 
-        if( temperature > 25){
+        /*if( temperature > 25){
             updateImage("https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/8-512.png")
         }else{
             updateImage("https://cdn2.iconfinder.com/data/icons/weather-colored-icons/47/weather_70-512.png")
+        }*/
+        when (temperature){
+            in 0 .. 15 -> updateImage("https://image.flaticon.com/icons/png/512/1342/premium/1342482.png")
+            in 16 .. 24 -> updateImage("https://image.flaticon.com/icons/png/512/789/789446.png")
+            in 25 .. 99 -> updateImage("https://image.flaticon.com/icons/png/512/1684/1684375.png")
         }
     }
 
