@@ -13,10 +13,10 @@ const val WEATHER_LOCATION_ID = 0
 @Entity(tableName = "weather_location")
 data class WeatherLocation(
     val country: String,
-    val lat: String,
+    val lat: Double,
     @SerializedName("localtime_epoch")
     val localtimeEpoch: Long, //time when the weather was requested
-    val lon: String,
+    val lon: Double,
     val name: String,
     val region: String,
     @SerializedName("timezone_id")

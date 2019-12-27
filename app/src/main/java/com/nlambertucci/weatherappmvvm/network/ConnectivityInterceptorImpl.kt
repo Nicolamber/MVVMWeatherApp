@@ -2,9 +2,9 @@ package com.nlambertucci.weatherappmvvm.network
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.nlambertucci.weatherappmvvm.utils.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 class ConnectivityInterceptorImpl (context: Context) :
     ConnectivityInterceptor {

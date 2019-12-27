@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nlambertucci.weatherappmvvm.model.response.CurrentWeatherResponse
+import com.nlambertucci.weatherappmvvm.utils.NoConnectivityException
 
 class WeatherNetworkDataSourceImpl (
     private val apiWeatherService: ApiWeatherService
@@ -20,7 +21,7 @@ class WeatherNetworkDataSourceImpl (
                .getCurrentWeather(location,languajeCode)
                .await()
            _downloadedCurrentWeather.postValue(fetchCurrentWeather)
-       }catch ( e: NoConnectivityException ){
+       }catch ( e: NoConnectivityException){
            Log.e("Connectivity", "No internet Conection",e)
        }
     }
