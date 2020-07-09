@@ -83,14 +83,6 @@ class MainActivity : AppCompatActivity(), KodeinAware {
            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                bindLocationManager()
            else
-              /* builder= AlertDialog.Builder(this@MainActivity)
-                   .setTitle("Error al buscar tu ubicación")
-                   .setMessage("Por favor dirígete a los ajustes de tu dispositivo y concede los permisos necesarios")
-                   .setPositiveButton("OK"){dialog, which ->
-
-                   }
-                 val dialog: AlertDialog = builder.create()
-                 dialog.show()*/
                Toast.makeText(this,"por favor conceder permisos",Toast.LENGTH_LONG).show()
        }
     }
